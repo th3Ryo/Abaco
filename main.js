@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
 /* 
 document.addEventListener('DOMContentLoaded', () => {
   // Se agrega un evento que se ejecutará cuando la página haya cargado completamente.
