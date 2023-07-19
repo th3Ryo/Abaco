@@ -1,0 +1,129 @@
+body {
+  background-color: darkcyan;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  
+}
+
+ul {
+  /* Restablecemos el padding-inline-start a 0 */
+  padding-inline-start: 0px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+
+}
+
+.nav-item {
+  margin: 0.5rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: rgb(255, 0, 0);
+  color: aliceblue;
+  font-weight: bold;
+}
+
+.abacus {
+  display: flex;
+  justify-content: center;
+}
+
+.abacus-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column; /* Añadimos una dirección de columna para colocar la base debajo del ábaco */
+  align-items: center;
+}
+
+.abacus-column {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.abacus-circle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid black;
+  margin-bottom: 5px;
+}
+
+.abacus-circle-filled {
+  background-color: blue;
+  border: 1px none;
+}
+
+/* Estilos para las líneas */
+.abacus-line {
+  position: absolute;
+  width: 2px;
+  background-color: black;
+}
+
+.abacus-line-top {
+  top: 0;
+  left: 47%;
+  transform: translateY(-50%);
+  height: 8px;
+}
+
+.abacus-line-bottom {
+  bottom: 0;
+  left: 47%;
+  transform: translateY(50%);
+  height: 8px;
+}
+
+.abacus-base {
+  background-color: brown;
+  border-radius: 0.5rem;
+  width: 15%;
+  height: 1rem;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.input-container input {
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: darkorange;
+  color: aliceblue;
+  font-weight: bold;
+}
+
+/* Tu código actual del archivo style.css */
+
+.exercise-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.exercise-container input {
+  margin-top: 10px;
+}
+
+.exercise-container button {
+  margin-top: 10px;
+}
