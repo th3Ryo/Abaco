@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Se ejecuta cuando el DOM ha sido completamente cargado y renderizado
+
+  const abacusDiv = document.querySelector('.abacus-container');
   const abacusContainer = document.querySelector('.abacus');
   const abacusBase = document.querySelector('.abacus-base');
+  const initialImageContainer = document.querySelector('.initial-image-container');
   const digitsInput = document.getElementById('digits-input');
   const updateButton = document.getElementById('update-button');
   const navItems = document.querySelectorAll('.nav-item');
@@ -11,9 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const exerciseAnotherButton = document.getElementById('exercise-another-button');
   const exerciseReturnButton = document.getElementById('exercise-return-button');
 
-  let activeSection = 'explicacion'; // Iniciamos con la sección "Explicación" como activa
+  let activeSection = 'inicio'; // Iniciamos con la sección "Explicación" como activa
 
   function generateAbacus(number) {
+    // Función para generar el ábaco basado en el número proporcionado
     abacusContainer.innerHTML = '';
     const digits = number.toString().split('').map(Number);
 
@@ -40,33 +45,42 @@ document.addEventListener('DOMContentLoaded', () => {
       abacusContainer.appendChild(column);
     });
 
+  /**
+   * ! ya no sirve
+   *    const abacusBase = document.querySelector('.abacus-base');
     if (!abacusBase) {
-      abacusBase = document.createElement('div');
-      abacusBase.className = 'abacus-base';
-      abacusContainer.parentElement.insertBefore(abacusBase, abacusContainer.nextElementSibling);
+      // Si no existe la base del ábaco, se crea y se agrega al DOM
+      const newAbacusBase = document.createElement('div');
+      newAbacusBase.className = 'abacus-base';
+      abacusDiv.parentElement.insertBefore(newAbacusBase, abacusDiv.nextElementSibling);
     }
 
     if (digits.length === 0) {
+      // Si no hay dígitos en el número, se oculta la base del ábaco
       abacusBase.classList.remove('abacus-base');
     } else {
+      // Si hay dígitos en el número, se muestra la base del ábaco
       abacusBase.classList.add('abacus-base');
-    }
+    } */
   }
 
   function generateRandomNumber() {
+    // Genera un número aleatorio entre 100 y 999 para los ejercicios del ábaco
     return Math.floor(Math.random() * 900) + 100;
   }
 
   function startExercise() {
+    // Inicia un ejercicio generando un número aleatorio y mostrando el ábaco correspondiente
     const randomNumber = generateRandomNumber();
     abacusContainer.setAttribute('data-random-number', randomNumber);
     generateAbacus(randomNumber);
 
-    exerciseFeedback.textContent = '';
-    exerciseInput.value = '';
+    exerciseFeedback.textContent = ''; // Borra el mensaje de retroalimentación
+    exerciseInput.value = ''; // Resetea el valor del input
   }
 
   function toggleInputContainerVisibility(show) {
+    // Muestra u oculta el contenedor de entrada (input-container) según el valor de "show"
     const inputContainer = document.querySelector('.input-container');
     if (show) {
       inputContainer.style.display = 'flex';
@@ -76,63 +90,93 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showExplanationSection() {
+    // Muestra la sección de "Explicación" y oculta la sección de "Ejercicios"
     activeSection = 'explicacion';
     exerciseContainer.style.display = 'none';
-    abacusContainer.style.display = 'flex';
-    abacusBase.style.display = 'block';
-    toggleInputContainerVisibility(true);
+    abacusDiv.style.display = 'flex';
+    abacusBase.style.display = 'flex'; // Muestra el abacusBase
+    toggleInputContainerVisibility(true); // Muestra el contenedor de entrada (input-container)
+    initialImageContainer.style.display = 'none'; // Muestra la imagen inicial
   }
 
   function showExerciseSection() {
+    // Muestra la sección de "Ejercicios" y oculta la sección de "Explicación"
     activeSection = 'ejercicios';
     exerciseContainer.style.display = 'flex';
-    toggleInputContainerVisibility(false);
-    startExercise();
+    abacusDiv.style.display = 'flex'; // Muestra el abacusDiv
+    abacusBase.style.display = 'flex'; // Muestra el abacusBase
+    toggleInputContainerVisibility(false); // Oculta el contenedor de entrada (input-container)
+    startExercise(); // Inicia un nuevo ejercicio generando un número aleatorio y mostrando el ábaco correspondiente
+    initialImageContainer.style.display = 'none'; // Oculta la imagen inicial
+  }
+  function showInitSection() {
+    // Muestra la sección de "Ejercicios" y oculta la sección de "Explicación"
+    activeSection = 'inicio';
+    exerciseContainer.style.display = 'none';
+    abacusDiv.style.display = 'none'; // Muestra el abacusDiv
+    toggleInputContainerVisibility(false); // Oculta el contenedor de entrada (input-container)
+    startExercise(); // Inicia un nuevo ejercicio generando un número aleatorio y mostrando el ábaco correspondiente
+    initialImageContainer.style.display = 'flex'; // Oculta la imagen inicial
   }
 
+
+
   updateButton.addEventListener('click', () => {
+    // Evento clic en el botón "Mostrar Abaco" (updateButton)
     const inputValue = digitsInput.value;
     if (activeSection === 'explicacion') {
+      // Si estamos en la sección de "Explicación"
       if (!isNaN(inputValue) && inputValue !== '') {
+        // Comprobamos que el valor ingresado sea un número válido
         const number = Number(inputValue);
-        generateAbacus(number);
+        generateAbacus(number); // Generamos el ábaco con el número ingresado
       } else {
         alert('Por favor, ingresa un número válido.');
       }
     } else if (activeSection === 'ejercicios') {
-      startExercise();
+      // Si estamos en la sección de "Ejercicios"
+      startExercise(); // Generamos un nuevo ejercicio con un número aleatorio
     }
+    else if (activeSection === 'inicio') {
+      // Si estamos en la sección de "Ejercicios"
+      showInitSection(); // Generamos un nuevo ejercicio con un número aleatorio
+    }
+
   });
 
   // Agregar event listeners a los elementos del navbar para cambiar entre secciones
   navItems.forEach(navItem => {
     navItem.addEventListener('click', () => {
+      // Evento clic en un elemento del navbar
       // Ocultar la sección actual y mostrar la nueva sección seleccionada
       if (navItem.dataset.section === 'explicacion') {
-        showExplanationSection();
+        showExplanationSection(); // Mostrar la sección de "Explicación"
       } else if (navItem.dataset.section === 'ejercicios') {
-        showExerciseSection();
+        showExerciseSection(); // Mostrar la sección de "Ejercicios"
       }
     });
   });
 
   exerciseButton.addEventListener('click', () => {
+    // Evento clic en el botón "Comprobar" (exerciseButton)
     const randomNumber = Number(abacusContainer.getAttribute('data-random-number'));
     const userInput = Number(exerciseInput.value);
     if (!isNaN(userInput) && userInput === randomNumber) {
-      exerciseFeedback.textContent = '¡Correcto! Felicitaciones.';
+      // Comprobamos que el valor ingresado sea un número válido y coincide con el número del ábaco
+      exerciseFeedback.textContent = '¡Correcto! Felicitaciones.'; // Mostramos mensaje de retroalimentación
     } else {
-      exerciseFeedback.textContent = 'Incorrecto. Intenta de nuevo.';
+      exerciseFeedback.textContent = 'Incorrecto. Intenta de nuevo.'; // Mostramos mensaje de retroalimentación
     }
   });
 
   exerciseAnotherButton.addEventListener('click', () => {
-    startExercise();
+    // Evento clic en el botón "Hacer otro ejercicio" (exerciseAnotherButton)
+    startExercise(); // Generamos un nuevo ejercicio con un número aleatorio
   });
 
   exerciseReturnButton.addEventListener('click', () => {
-    // Regresar a la sección "Explicación"
-    showExplanationSection();
+    // Evento clic en el botón "Regresar al inicio" (exerciseReturnButton)
+    showInitSection(); // Mostrar la sección de "Explicación"
   });
 });
 
@@ -141,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   // Se agrega un evento que se ejecutará cuando la página haya cargado completamente.
 
-  const abacusContainer = document.querySelector('.abacus');
-  // Se selecciona el elemento con la clase 'abacus' y se guarda en la variable abacusContainer.
+  const abacus = document.querySelector('.abacus');
+  // Se selecciona el elemento con la clase 'abacus' y se guarda en la variable abacus.
 
   const digitsInput = document.getElementById('digits-input');
   // Se selecciona el elemento con el id 'digits-input' (el input donde se ingresan los dígitos) y se guarda en la variable digitsInput.
@@ -164,8 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Se crea un nuevo array llamado digits que contiene los primeros 3 elementos de digitsArray.
     // Si se ingresaron menos de 3 dígitos, se tomarán todos los dígitos ingresados.
 
-    abacusContainer.innerHTML = '';
-    // Se limpia el contenido del elemento abacusContainer, para poder generar el nuevo ábaco.
+    abacus.innerHTML = '';
+    // Se limpia el contenido del elemento abacus, para poder generar el nuevo ábaco.
 
     digits.forEach(digit => {
       // Se itera sobre cada dígito del array digits.
@@ -212,8 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      abacusContainer.appendChild(column);
-      // Se agrega la columna completa al div abacusContainer.
+      abacus.appendChild(column);
+      // Se agrega la columna completa al div abacus.
     });
 
     if (!abacusBase) {
@@ -225,8 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
       abacusBase.className = 'abacus-base';
       // Se le asigna la clase 'abacus-base' al div abacusBase.
 
-      abacusContainer.parentElement.insertBefore(abacusBase, abacusContainer.nextElementSibling);
-      // Se agrega la base debajo del contenedor del ábaco, justo después del elemento abacusContainer.
+      abacus.parentElement.insertBefore(abacusBase, abacus.nextElementSibling);
+      // Se agrega la base debajo del contenedor del ábaco, justo después del elemento abacus.
     }
 
     if (digits.length === 0) {

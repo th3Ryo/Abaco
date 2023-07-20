@@ -7,15 +7,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h1 hidden>App Abacus</h1>
+  <div class="initial-title-container">
+    <img src="./public/TITULO.svg" alt="Imagen inicial">
+  </div>
   <nav>
     <ul class="nav-list">
       <li class="nav-item" data-section="explicacion">Explicación</li>
       <li class="nav-item" data-section="ejercicios">Ejercicios</li>
     </ul>
   </nav>
-  <div class="abacus-container">
+  <div class="initial-image-container" hidden>
+    <img src="./public/giphy.gif" alt="Imagen inicial">
+  </div>
+  <div class="abacus-container hidden">
     <div class="abacus"></div>
-    <div class="abacus-base"></div>
+    <div class="abacus-base hidden"></div>
   </div>
   <div class="input-container">
     <input id="digits-input" type="text" placeholder="Introduce los dígitos">
@@ -29,7 +36,6 @@
       <button id="exercise-another-button">Hacer otro ejercicio</button>
       <button id="exercise-return-button">Regresar al inicio</button>
     </div>
-    
   </div>
   <script src="main.js"></script>
 </body>
